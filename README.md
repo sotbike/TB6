@@ -1,5 +1,5 @@
 # TB6
-time series analysis data &amp; code (minor complications after robotic vs. open partial nephrectomy)
+time series analysis data accompanied by code (minor complications after robotic vs. open partial nephrectomy)
 
 R code is included for the implementation of fixed and random effects models in the context of a meta-regression analysis (moderator: year of publication)
 
