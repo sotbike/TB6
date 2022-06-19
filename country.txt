@@ -1,0 +1,28 @@
+install.packages("RColorBrewer")
+install.packages("rworldmap")
+library(RColorBrewer)
+library(rworldmap)
+
+###### FOR CONTINUOUS #######
+
+mapdata <- read.csv("C:/Users/sotbi/Desktop/country.csv", sep=";", na.strings="")
+mapdata <-mapdata[c(1:12),]
+colnames(mapdata)[colnames(mapdata)=="percentage"]<-"Each Country contribution to the dataset of studies"
+worldmapcountries<-joinCountryData2Map(mapdata,nameJoinColumn = "country",joinCode = "NAME")
+colourpalette_1<-RColorBrewer::brewer.pal(7,"Blues")
+mapCountryData(worldmapcountries,nameColumnToPlot = "Each Country contribution to the dataset of studies",catMethod = "fixedwidth", colourPalette = colourpalette_1, numCats = 50)
+
+###### FOR CATEGORICAL #######
+
+mapdata <- read.csv("C:/Users/sotbi/Desktop/country.csv", sep=";", na.strings="")
+mapdata <-mapdata[c(1:12),]
+mapdata$percentage<-as.factor(mapdata$percentage)
+colnames(mapdata)[colnames(mapdata)=="percentage"]<-"Each Country contribution to the dataset of studies"
+worldmapcountries<-joinCountryData2Map(mapdata,nameJoinColumn = "country",joinCode = "NAME")
+colourpalette_1<-RColorBrewer::brewer.pal(7,"Reds")
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+mapCountryData(worldmapcountries,nameColumnToPlot = "Each Country contribution to the dataset of studies",catMethod = "fixedwidth", oceanCol="lightblue", colourPalette = colourpalette_1, missingCountryCol="white", numCats = 5)
+
+
+
+
