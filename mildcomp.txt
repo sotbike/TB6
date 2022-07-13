@@ -8,6 +8,8 @@ mildcomp <-mildcomp[c(1:16),]
 ############# FIXED EFFECTS MODEL ###########
 
 # Pooled Analysis
+peto_fe<-metabin(evexp,nexp,evctrl,nctrl,sm="OR",method = "peto",data = mildcomp,studlab=study,comb.random = FALSE)
+forest_peto_fe<-forest(peto_fe, xlim = c(0.05,15))
 
 # Meta Regression Analysis (Pooled)
 metareg_peto_fe<-escalc(measure = "OR",ai = evexp, bi = nonevexp, ci = evctrl, di = nonevctrl, data = mildcomp, append = TRUE)
@@ -24,7 +26,9 @@ lines(yearvec, preds$ci.ub, lty = "dashed")
 abline(h=0, lwd = 2, lty = "dotted")
 
 
-# Subgroup Analysis
+# Subgroup Analysis (Studies with / without patient matching)
+peto_fe_match<-metabin(evexp,nexp,evctrl,nctrl,sm="OR",method = "peto",data = mildcomp,studlab=study,comb.random = FALSE, byvar = matching, print.byvar = FALSE)
+forest_peto_fe_match<-forest(peto_fe_match, xlim = c(0.05,15),test.subgroup = FALSE)
 
 # Meta Regression Analysis (Studies with patient matching)
 metareg_peto_fe<-escalc(measure = "OR",ai = evexp, bi = nonevexp, ci = evctrl, di = nonevctrl, data = mildcomp [mildcomp$matching=="Studies with patient matching",], append = TRUE)
@@ -55,6 +59,10 @@ lines(yearvec, preds$ci.lb, lty = "dashed")
 lines(yearvec, preds$ci.ub, lty = "dashed")
 abline(h=0, lwd = 2, lty = "dotted")
 
+
+# Subgroup Analysis (Single- / Multicenter Studies)
+peto_fe_center<-metabin(evexp,nexp,evctrl,nctrl,sm="OR",method = "peto",data = mildcomp,studlab=study,comb.random = FALSE, byvar = center, print.byvar = FALSE)
+forest_peto_fe_center<-forest(peto_fe_center, xlim = c(0.05,15),test.subgroup = FALSE)
 
 # Meta Regression Analysis (Multicenter Studies)
 metareg_peto_fe<-escalc(measure = "OR",ai = evexp, bi = nonevexp, ci = evctrl, di = nonevctrl, data = mildcomp [mildcomp$center=="Multicenter Studies",], append = TRUE)
@@ -90,6 +98,8 @@ abline(h=0, lwd = 2, lty = "dotted")
 ############# RANDOM EFFECTS MODEL ###########
 
 # Pooled Analysis
+peto_re<-metabin(evexp,nexp,evctrl,nctrl,sm="OR",method = "peto",data = mildcomp,studlab=study,comb.fixed = FALSE)
+forest_peto_re<-forest(peto_re, xlim = c(0.05,15))
 
 # Meta Regression Analysis (Pooled)
 metareg_peto_re<-escalc(measure = "OR",ai = evexp, bi = nonevexp, ci = evctrl, di = nonevctrl, data = mildcomp, append = TRUE)
@@ -106,7 +116,9 @@ lines(yearvec, preds$ci.ub, lty = "dashed")
 abline(h=0, lwd = 2, lty = "dotted")
 
 
-# Subgroup Analysis
+# Subgroup Analysis (Studies with / without patient matching)
+peto_re_match<-metabin(evexp,nexp,evctrl,nctrl,sm="OR",method = "peto",data = mildcomp,studlab=study,comb.fixed = FALSE, byvar = matching, print.byvar = FALSE)
+forest_peto_re_match<-forest(peto_re_match, xlim = c(0.05,15),test.subgroup = FALSE)
 
 # Meta Regression Analysis (Studies with patient matching)
 metareg_peto_re<-escalc(measure = "OR",ai = evexp, bi = nonevexp, ci = evctrl, di = nonevctrl, data = mildcomp [mildcomp$matching=="Studies with patient matching",], append = TRUE)
@@ -137,6 +149,10 @@ lines(yearvec, preds$ci.lb, lty = "dashed")
 lines(yearvec, preds$ci.ub, lty = "dashed")
 abline(h=0, lwd = 2, lty = "dotted")
 
+
+# Subgroup Analysis (Single- / Multicenter Studies)
+peto_re_center<-metabin(evexp,nexp,evctrl,nctrl,sm="OR",method = "peto",data = mildcomp,studlab=study,comb.fixed = FALSE, byvar = center, print.byvar = FALSE)
+forest_peto_re_center<-forest(peto_re_center, xlim = c(0.05,15),test.subgroup = FALSE)
 
 # Meta Regression Analysis (Multicenter Studies)
 metareg_peto_re<-escalc(measure = "OR",ai = evexp, bi = nonevexp, ci = evctrl, di = nonevctrl, data = mildcomp [mildcomp$center=="Multicenter Studies",], append = TRUE)
